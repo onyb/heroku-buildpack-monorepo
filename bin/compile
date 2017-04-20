@@ -12,6 +12,8 @@ if [ ! -f ${ENV_DIR}/APP_BASE ]; then
     echo "APP_BASE was not set. Aborting" | indent
 fi
 APP_BASE=$(cat ${ENV_DIR}/APP_BASE)
+cd ${BUILD_DIR} && make
+cd -
 
 (
     stage=`mktemp -d` &&
