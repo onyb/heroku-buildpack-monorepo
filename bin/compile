@@ -8,20 +8,27 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
+BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+ROOT_DIR=$(dirname $BIN_DIR)
+
 if [ ! -f ${ENV_DIR}/APP_BASE ]; then
     echo "APP_BASE was not set. Aborting" | indent
 fi
 APP_BASE=$(cat ${ENV_DIR}/APP_BASE)
 
+function virtualenv (){
+  "$ROOT_DIR/vendor/virtualenv-15.1.0/virtualenv.py" "$@"
+}
+
+
 ########################### TRANSLATE QUESTIONNAIRES ###########################
 echo "-----> Running make in project root"
 
 echo "Activating $(python3 --version) virtualenv." | indent
-VENV=${CACHE_DIR}/venv/questionnaires
-apt-get -y --force-yes install python3-venv | indent
+VENV_DIR=${CACHE_DIR}/venv/questionnaires
 
-test -d ${VENV} || virtualenv -p python3 ${VENV}
-source ${VENV}/bin/activate
+test -d ${VENV_DIR} || virtualenv -p python3 ${VENV_DIR}
+source ${VENV_DIR}/bin/activate
 
 echo "Installing questionnaires/requirements.txt with pip" | indent
 pip install -r ${BUILD_DIR}/questionnaires/requirements.txt
