@@ -17,8 +17,9 @@ APP_BASE=$(cat ${ENV_DIR}/APP_BASE)
 echo "-----> Running make in project root"
 
 echo "Activating $(python3 --version) virtualenv." | indent
-python3 -m venv --upgrade ${CACHE_DIR}/venv/questionnaires
-source $CACHE_DIR/venv/questionnaires/bin/activate
+VENV=${CACHE_DIR}/venv/questionnaires
+test -d ${VENV} || virtualenv -p python3 ${VENV}
+source ${VENV}/bin/activate
 
 echo "Installing questionnaires/requirements.txt with pip" | indent
 pip install -r ${BUILD_DIR}/questionnaires/requirements.txt
