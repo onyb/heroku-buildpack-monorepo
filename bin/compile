@@ -13,8 +13,9 @@ if [ ! -f ${ENV_DIR}/APP_BASE ]; then
 fi
 APP_BASE=$(cat ${ENV_DIR}/APP_BASE)
 
-echo $(python --version)
-echo $(python3 --version)
+ls $BUILD_DIR
+ls $CACHE_DIR
+ls $ENV_DIR
 
 
 
