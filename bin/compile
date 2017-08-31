@@ -12,6 +12,12 @@ if [ ! -f ${ENV_DIR}/APP_BASE ]; then
     echo "APP_BASE was not set. Aborting" | indent
 fi
 APP_BASE=$(cat ${ENV_DIR}/APP_BASE)
+
+echo $(python --version)
+echo $(python3 --version)
+
+
+
 cd ${BUILD_DIR} && make
 cd -
 
