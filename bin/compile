@@ -13,14 +13,21 @@ if [ ! -f ${ENV_DIR}/APP_BASE ]; then
 fi
 APP_BASE=$(cat ${ENV_DIR}/APP_BASE)
 
-ls $BUILD_DIR
-ls $CACHE_DIR
-ls $ENV_DIR
+########################### TRANSLATE QUESTIONNAIRES ###########################
+echo "-----> Running make in project root"
 
+echo "Activating $(python3 --version) virtualenv." | indent
+python3 -m venv --upgrade ${CACHE_DIR}/venv/questionnaires
+source $CACHE_DIR/venv/questionnaires/bin/activate
 
+echo "Installing questionnaires/requirements.txt with pip" | indent
+pip install -r ${BUILD_DIR}/questionnaires/requirements.txt
 
+echo "Translating questionnaires" | indent
 cd ${BUILD_DIR} && make
 cd -
+deactivate
+################################################################################
 
 (
     stage=`mktemp -d` &&
